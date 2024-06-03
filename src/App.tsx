@@ -2,6 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Layout from "./users/components/Layout";
 import UserPlaces from "./users/pages/UserPlaces";
 import Users from "./users/pages/Users";
+import NewPlace from "./places/pages/NewPlace";
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
 			{
 				index: true,
 				element: <Users />,
+			},
+			{
+				path: "/place/new",
+				element: <NewPlace />,
 			},
 		],
 	},
