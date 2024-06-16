@@ -1,4 +1,4 @@
-import { ComponentProps, useReducer } from "react";
+import { ComponentProps, useEffect, useReducer } from "react";
 import "./Input.css";
 import { validate } from "../utils/validators";
 
@@ -9,6 +9,7 @@ interface Props extends ComponentProps<"input"> {
 	errorText: string;
 	rows?: number;
 	validators: any[];
+	getInput: (id: string, value: string, isValid: boolean) => void;
 }
 interface Action {
 	type: string;
@@ -52,6 +53,7 @@ const Input = ({
 	rows,
 	errorText,
 	validators,
+	getInput,
 }: Props) => {
 	const [state, dispatch] = useReducer(inputReducer, initialState);
 	const changeHandler = (e: any) => {
@@ -66,6 +68,10 @@ const Input = ({
 	const touchHandler = () => {
 		dispatch({ type: "TOUCH" });
 	};
+	useEffect(() => {
+		getInput(id!, state.enteredValue, state.isValid);
+	}, [id, state.enteredValue, state.isValid]);
+
 	const element =
 		el === "input" ? (
 			<input
