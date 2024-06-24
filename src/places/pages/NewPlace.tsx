@@ -1,8 +1,11 @@
-import { useReducer } from "react";
-import Input from "../../shared/Form Elements/Input";
-import { VALIDATOR_REQUIRE } from "../../shared/utils/validators";
-import "./NewPlace.css";
+import { FormEvent, useReducer } from "react";
 import Button from "../../shared/Form Elements/Button";
+import Input from "../../shared/Form Elements/Input";
+import {
+	VALIDATOR_MINLENGTH,
+	VALIDATOR_REQUIRE,
+} from "../../shared/utils/validators";
+import "./NewPlace.css";
 interface Action {
 	type: string;
 	payload: {
@@ -69,8 +72,12 @@ const NewPlace = () => {
 			payload: { inputId: id, isValid, value },
 		});
 	};
+	const handlePlaceSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		console.log(state.inputs);
+	};
 	return (
-		<form className="place-form">
+		<form className="place-form" onSubmit={handlePlaceSubmit}>
 			<Input
 				type="text"
 				id="title"
@@ -84,9 +91,17 @@ const NewPlace = () => {
 				id="description"
 				el="textarea"
 				label="description"
-				errorText="Please enter a valid description"
+				errorText="The description should be at least 5 characters"
+				validators={[VALIDATOR_MINLENGTH("5")]}
+				getInput={titleChangeHandler}
+			/>
+			<Input
+				id="address"
+				el="input"
+				label="address"
 				validators={[VALIDATOR_REQUIRE()]}
 				getInput={titleChangeHandler}
+				errorText="Please enter a valid address"
 			/>
 			<Button type="submit" disabled={!state.isValid}>
 				Add place

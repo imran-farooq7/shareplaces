@@ -10,6 +10,7 @@ interface Props extends ComponentProps<"input"> {
 	rows?: number;
 	validators: any[];
 	getInput: (id: string, value: string, isValid: boolean) => void;
+	value?: string;
 }
 interface Action {
 	type: string;
@@ -54,6 +55,7 @@ const Input = ({
 	errorText,
 	validators,
 	getInput,
+	value,
 }: Props) => {
 	const [state, dispatch] = useReducer(inputReducer, initialState);
 	const changeHandler = (e: any) => {
@@ -79,7 +81,7 @@ const Input = ({
 				id={id}
 				placeholder={placeholder}
 				onChange={changeHandler}
-				value={state.enteredValue}
+				value={state.enteredValue ? state.enteredValue : value}
 				onBlur={touchHandler}
 			/>
 		) : (
@@ -87,7 +89,7 @@ const Input = ({
 				rows={rows || 3}
 				id={id}
 				onChange={changeHandler}
-				value={state.enteredValue}
+				value={state.enteredValue ? state.enteredValue : value}
 				onBlur={touchHandler}
 			/>
 		);

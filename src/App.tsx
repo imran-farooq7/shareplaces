@@ -3,6 +3,10 @@ import Layout from "./users/components/Layout";
 import UserPlaces from "./users/pages/UserPlaces";
 import Users from "./users/pages/Users";
 import NewPlace from "./places/pages/NewPlace";
+import UpdatePlace, {
+	loader as updatePlaceLoader,
+} from "./places/pages/UpdatePlace";
+
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -17,8 +21,13 @@ const router = createBrowserRouter([
 				element: <Users />,
 			},
 			{
-				path: "/place/new",
+				path: "/places/new",
 				element: <NewPlace />,
+			},
+			{
+				path: "/places/:pid",
+				element: <UpdatePlace />,
+				loader: updatePlaceLoader,
 			},
 		],
 	},
